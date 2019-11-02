@@ -1,0 +1,18 @@
+SHOW DATABASES;
+DROP DATABASE IF EXISTS nfinn2b;
+CREATE DATABASE nfinn2b;
+USE nfinn2b;
+
+GRANT USAGE ON *.* TO 'ta'@'localhost';
+DROP USER 'ta'@'localhost';
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319';
+GRANT ALL PRIVILEGES ON yourwesternuseridassign2db.* TO 'ta'@'localhost';
+FLUSH PRIVILEGES;
+
+SHOW tables;
+
+CREATE TABLE doctor (firstname VARCHAR(20), lastname VARCHAR(20), dateoflicense DATE, specialty VARCHAR(30), licensenum VARCHAR(4) NOT NULL, PRIMARY KEY(licensenum))
+
+CREATE TABLE hospital (hospname VARCHAR(20), city VARCHAR(20), province VARCHAR(2), numberofbed INT, hospitalcode VARCHAR(3) NOT NULL, PRIMARY KEY(hospitalcode))
+
+CREATE TABLE patient (firstname VARCHAR(20), lastname VARCHAR(20), OHIPnum INT NOT NULL, PRIMARY KEY(OHIPnum))

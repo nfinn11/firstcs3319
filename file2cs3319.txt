@@ -1,0 +1,52 @@
+USE nfinn2db;
+
+SELECT * FROM patient;
+
+LOAD DATA INFILE 'http://www.csd.uwo.ca/~lreid/blendedcs3319/assignments/assignment2/loaddatafall2019.txt' INTO TABLE patient;
+
+SELECT * FROM patient;
+
+INSERT INTO patient VALUES("939402394","Nick","Finn")
+
+SELECT * FROM patient;
+
+SELECT * FROM doctor;
+
+INSERT INTO doctor VALUES("Bernie","Kavorikian","1980-09-09","Urologist","RD34")
+...DO rest on sql
+
+SELECT * FROM doctor;
+
+SELECT * FROM hospital;
+
+INSERT INTO hospital VALUES("St.Joseph","London","On",1000,"BBC","GD56")
+...Do rest on sql
+
+SELECT * FROM hospital;
+
+SELECT * FROM treats;
+
+INSERT INTO treats VALUES("OHIPnum","doclicense")
+...
+
+SELECT * FROM treats;
+
+SELECT * FROM doctor;
+
+UPDATE doctor SET 'worksinhoscode' = 'BBC' WHERE "licensenum: = 'RD34';
+...
+
+SELECT * FROM doctor;
+
+SELECT * FROM patient;
+
+UPDATE patient SET "lastname" = "Brown" WHERE "OHIPnum" = "111222111";
+
+SELECT * FROM patient;
+
+SELECT * FROM treats;
+
+UPDATE treats SET "licensenum" = (SELECT "licensenum" FROM doctor WHERE "lastname" = "Clooney")
+	WHERE "licensenum" = (SELECT "licensenum" FROM doctor WHERE "lastname" = "Spock");
+
+SELECT * FROM treats;

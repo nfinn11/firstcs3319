@@ -1,2 +1,92 @@
-Warning: Using a password on the command line interface can be insecure.
-ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ERROR 1064 (42000) at line 3: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 1
+SELECT lastname FROM patient' at line 1
+ERROR 1064 (42000) at line 6: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 2
+SELECT DISTINCT lastname FROM patient' at line 1
+ERROR 1064 (42000) at line 9: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 3
+SELECT * FROM doctor ORDER BY lastname' at line 1
+ERROR 1064 (42000) at line 12: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 4
+SELECT hospname,hospitalcode FROM hospital WHERE numberofbed > 1500' at line 1
+ERROR 1064 (42000) at line 15: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 5
+SELECT lastname,firstname FROM doctor WHERE worksat IN (SELECT hospita' at line 1
+ERROR 1064 (42000) at line 18: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 6
+SELECT firstname,lastname FROM patient WHERE lastname LIKE 'G%'' at line 1
+ERROR 1064 (42000) at line 21: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 7
+SELECT firstname,lastname FROM patient WHERE OHIPnum IN (SELECT treats' at line 1
+ERROR 1064 (42000) at line 24: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 8
+SELECT hospital.hospname, hospital.city, doctor.lastname FROM hospital' at line 1
+ERROR 1064 (42000) at line 27: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 9
+SELECT sum(numberofbed) AS "Total Number of Beds" FROM hospital' at line 1
+ERROR 1064 (42000) at line 30: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 10
+SELECT patient.firstname AS "patientname", doctor.firstname AS "docto' at line 1
+ERROR 1064 (42000) at line 33: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 11
+SELECT firstname,lastname FROM doctor WHERE doctor.specialty = "surge' at line 1
+ERROR 1064 (42000) at line 36: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 12
+SELECT firstname FROM doctor WHERE licensenum NOT IN (SELECT treats.d' at line 1
+ERROR 1064 (42000) at line 39: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Query 13
+SELECT firstname,lastname FROM doctor WHERE licensenum IN (SELECT tre' at line 1
+--------------
+--Query 1
+SELECT lastname FROM patient
+--------------
+
+--------------
+--Query 2
+SELECT DISTINCT lastname FROM patient
+--------------
+
+--------------
+--Query 3
+SELECT * FROM doctor ORDER BY lastname
+--------------
+
+--------------
+--Query 4
+SELECT hospname,hospitalcode FROM hospital WHERE numberofbed > 1500
+--------------
+
+--------------
+--Query 5
+SELECT lastname,firstname FROM doctor WHERE worksat IN (SELECT hospitalcode FROM hospital WHERE hospname="St.Joseph")
+--------------
+
+--------------
+--Query 6
+SELECT firstname,lastname FROM patient WHERE lastname LIKE 'G%'
+--------------
+
+--------------
+--Query 7
+SELECT firstname,lastname FROM patient WHERE OHIPnum IN (SELECT treats.OHIPnum FROM treats WHERE treats.doctorslicensenum IN (SELECT doctor.licensenum FROM doctor WHERE lastname="Clooney"))
+--------------
+
+--------------
+--Query 8
+SELECT hospital.hospname, hospital.city, doctor.lastname FROM hospital, doctor WHERE hospital.headdocid = doctor.licensenum
+--------------
+
+--------------
+--Query 9
+SELECT sum(numberofbed) AS "Total Number of Beds" FROM hospital
+--------------
+
+--------------
+--Query 10
+SELECT patient.firstname AS "patientname", doctor.firstname AS "doctorname" FROM patient JOIN treats ON treats.OHIPnum=patient.OHIPnum JOIN doctor ON treats.doctorslicensenum=doctor.licensenum JOIN hospital ON doctor.licensenum=hospital.headdocid
+--------------
+
+--------------
+--Query 11
+SELECT firstname,lastname FROM doctor WHERE doctor.specialty = "surgeon" AND doctor.worksat IN (SELECT hospital.hospitalcode FROM hospital WHERE hospital.hospname = "Victoria")
+--------------
+
+--------------
+--Query 12
+SELECT firstname FROM doctor WHERE licensenum NOT IN (SELECT treats.doctorslicensenum FROM treats)
+--------------
+
+--------------
+--Query 13
+SELECT firstname,lastname FROM doctor WHERE licensenum IN (SELECT treats.doctorslicensenum FROM treats GROUP BY treats.doctorslicensenum HAVING count(treats.OHIPnum)>1)
+--------------
+
+Bye

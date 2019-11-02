@@ -1,0 +1,119 @@
+--------------
+SHOW DATABASES
+--------------
+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| nfinn2db           |
+| performance_schema |
+| vetoffice          |
++--------------------+
+5 rows in set (0.00 sec)
+
+ERROR 1064 (42000) at line 3: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Drop the database if it already exists
+DROP DATABASE IF EXISTS nfinn2db' at line 1
+ERROR 1064 (42000) at line 6: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Create and use the new one
+CREATE DATABASE nfinn2db' at line 1
+--------------
+--Drop the database if it already exists
+DROP DATABASE IF EXISTS nfinn2db
+--------------
+
+--------------
+--Create and use the new one
+CREATE DATABASE nfinn2db
+--------------
+
+ERROR 1064 (42000) at line 10: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--TA permissions
+GRANT USAGE ON *.* TO 'ta'@'localhost'' at line 1
+ERROR 1396 (HY000) at line 12: Operation DROP USER failed for 'ta'@'localhost'
+--------------
+--TA permissions
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON nfinn2db.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+SHOW tables
+--------------
+
++--------------------+
+| Tables_in_nfinn2db |
++--------------------+
+| doctor             |
+| hospital           |
+| patient            |
+| pnames             |
+| treats             |
++--------------------+
+5 rows in set (0.00 sec)
+
+ERROR 1064 (42000) at line 19: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Create all the tables
+CREATE TABLE doctor (firstname VARCHAR(20), lastname VAR' at line 1
+ERROR 1050 (42S01) at line 22: Table 'hospital' already exists
+ERROR 1064 (42000) at line 24: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Add the foreign key for doctors hospital of work afterwards
+ALTER TABLE doctor' at line 1
+ERROR 1050 (42S01) at line 27: Table 'patient' already exists
+ERROR 1050 (42S01) at line 29: Table 'treats' already exists
+--------------
+--Create all the tables
+CREATE TABLE doctor (firstname VARCHAR(20), lastname VARCHAR(20), dateoflicense DATE, specialty VARCHAR(30), licensenum VARCHAR(4) NOT NULL, worksat VARCHAR(3), PRIMARY KEY(licensenum))
+--------------
+
+--------------
+CREATE TABLE hospital (hospname VARCHAR(20), city VARCHAR(20), province VARCHAR(2), numberofbed INT, hospitalcode VARCHAR(3) NOT NULL, headdocid VARCHAR(4), headdocstartdate DATE, PRIMARY KEY(hospitalcode), FOREIGN KEY(headdocid) REFERENCES doctor(licensenum))
+--------------
+
+--------------
+--Add the foreign key for doctors hospital of work afterwards
+ALTER TABLE doctor ADD FOREIGN KEY (worksat) REFERENCES hospital(hospitalcode)
+--------------
+
+--------------
+CREATE TABLE patient (OHIPnum INT NOT NULL,firstname VARCHAR(20), lastname VARCHAR(20), PRIMARY KEY(OHIPnum))
+--------------
+
+--------------
+CREATE TABLE treats (OHIPnum INT NOT NULL, doctorslicensenum VARCHAR(4), PRIMARY KEY(OHIPnum,doctorslicensenum), FOREIGN KEY(OHIPnum) REFERENCES patient(OHIPnum) ON DELETE CASCADE, FOREIGN KEY(doctorslicensenum) REFERENCES doctor(licensenum) ON DELETE CASCADE)
+--------------
+
+--------------
+SHOW tables
+--------------
+
++--------------------+
+| Tables_in_nfinn2db |
++--------------------+
+| doctor             |
+| hospital           |
+| patient            |
+| pnames             |
+| treats             |
++--------------------+
+5 rows in set (0.00 sec)
+
+Bye

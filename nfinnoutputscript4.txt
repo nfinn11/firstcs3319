@@ -1,2 +1,70 @@
-Warning: Using a password on the command line interface can be insecure.
-ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ERROR 1049 (42000) at line 1: Unknown database 'nfinn2b'
+ERROR 1046 (3D000) at line 3: No database selected
+ERROR 1046 (3D000) at line 7: No database selected
+ERROR 1046 (3D000) at line 9: No database selected
+ERROR 1064 (42000) at line 11: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--View to see patients first names and last names who are treated by head doctor' at line 1
+ERROR 1046 (3D000) at line 14: No database selected
+ERROR 1046 (3D000) at line 16: No database selected
+ERROR 1046 (3D000) at line 18: No database selected
+ERROR 1046 (3D000) at line 20: No database selected
+ERROR 1046 (3D000) at line 22: No database selected
+ERROR 1064 (42000) at line 24: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Use to show the cascade delete effects
+SHOW CREATE TABLE treats' at line 1
+ERROR 1046 (3D000) at line 26: No database selected
+ERROR 1046 (3D000) at line 28: No database selected
+ERROR 1046 (3D000) at line 30: No database selected
+--------------
+DELETE FROM doctor WHERE dateoflicense < "1965-01-01"
+--------------
+
+--------------
+SELECT * FROM doctor
+--------------
+
+--------------
+SELECT * FROM patient
+--------------
+
+--------------
+--View to see patients first names and last names who are treated by head doctors of hospitals.
+CREATE VIEW pnames AS SELECT patient.firstname, patient.lastname, doctor.lastname AS "doctorname", hospname FROM patient, doctor JOIN hospital WHERE licensenum IN (SELECT headdocid FROM hospital WHERE headdocstartdate > '1995-12-31') AND licensenum = headdocid AND patient.OHIPnum IN (SELECT treats.OHIPnum FROM treats WHERE treats.doctorslicensenum = doctor.licensenum)
+--------------
+
+--------------
+SELECT * FROM pnames
+--------------
+
+--------------
+SELECT * FROM doctor
+--------------
+
+--------------
+SELECT * FROM treats
+--------------
+
+--------------
+DELETE FROM doctor WHERE lastname = "Clooney"
+--------------
+
+--------------
+SELECT * FROM doctor
+--------------
+
+--------------
+--Use to show the cascade delete effects
+SHOW CREATE TABLE treats
+--------------
+
+--------------
+SELECT * FROM treats
+--------------
+
+--------------
+SELECT * FROM doctor
+--------------
+
+--------------
+DELETE FROM doctor WHERE specialty = "Surgeon"
+--------------
+
+Bye

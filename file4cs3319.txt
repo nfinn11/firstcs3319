@@ -1,0 +1,24 @@
+USE nfinn2b;
+
+DELETE FROM doctor WHERE dateoflicense < "1965-01-01";
+
+SELECT * FROM doctor;
+
+SELECT * FROM patient;
+
+CREATE VIEW pnames AS SELECT firstname,lastname 
+
+SELECT * FROM pnames;
+
+SELECT * FROM doctor;
+
+SELECT * FROM treats;
+
+DELETE FROM doctor WHERE lastname = "Clooney";
+
+SELECT * FROM doctor;
+
+SELECT * FROM treats;
+
+DELETE FROM doctor WHERE specialty = "Surgeon";
+

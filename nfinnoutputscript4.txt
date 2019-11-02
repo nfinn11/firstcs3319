@@ -1,18 +1,4 @@
-ERROR 1049 (42000) at line 1: Unknown database 'nfinn2b'
-ERROR 1046 (3D000) at line 3: No database selected
-ERROR 1046 (3D000) at line 7: No database selected
-ERROR 1046 (3D000) at line 9: No database selected
-ERROR 1064 (42000) at line 11: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--View to see patients first names and last names who are treated by head doctor' at line 1
-ERROR 1046 (3D000) at line 14: No database selected
-ERROR 1046 (3D000) at line 16: No database selected
-ERROR 1046 (3D000) at line 18: No database selected
-ERROR 1046 (3D000) at line 20: No database selected
-ERROR 1046 (3D000) at line 22: No database selected
-ERROR 1064 (42000) at line 24: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Use to show the cascade delete effects
-SHOW CREATE TABLE treats' at line 1
-ERROR 1046 (3D000) at line 26: No database selected
-ERROR 1046 (3D000) at line 28: No database selected
-ERROR 1046 (3D000) at line 30: No database selected
+ERROR 1451 (23000) at line 3: Cannot delete or update a parent row: a foreign key constraint fails (`nfinn2db`.`hospital`, CONSTRAINT `hospital_ibfk_1` FOREIGN KEY (`headdocid`) REFERENCES `doctor` (`licensenum`))
 --------------
 DELETE FROM doctor WHERE dateoflicense < "1965-01-01"
 --------------
@@ -21,48 +7,171 @@ DELETE FROM doctor WHERE dateoflicense < "1965-01-01"
 SELECT * FROM doctor
 --------------
 
++-----------+------------+---------------+--------------+------------+---------+
+| firstname | lastname   | dateoflicense | specialty    | licensenum | worksat |
++-----------+------------+---------------+--------------+------------+---------+
+| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | BBC     |
+| Ross      | Clooney    | 1987-06-20    | Surgeon      | HT45       | DDE     |
+| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | BBC     |
+| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | ABC     |
+| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | BBC     |
+| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
+| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
++-----------+------------+---------------+--------------+------------+---------+
+7 rows in set (0.00 sec)
+
 --------------
 SELECT * FROM patient
 --------------
 
++-----------+-----------+----------+
+| OHIPnum   | firstname | lastname |
++-----------+-----------+----------+
+| 110112113 | Bill      | Gellar   |
+| 111222111 | Suzi      | Brown    |
+| 111222333 | Jon       | Green    |
+| 333444555 | Colleen   | Gellar   |
+| 444555666 | Sean      | Gellar   |
+| 667766777 | Scotty    | Bing     |
+| 939402394 | Nick      | Finn     |
++-----------+-----------+----------+
+7 rows in set (0.00 sec)
+
 --------------
---View to see patients first names and last names who are treated by head doctors of hospitals.
 CREATE VIEW pnames AS SELECT patient.firstname, patient.lastname, doctor.lastname AS "doctorname", hospname FROM patient, doctor JOIN hospital WHERE licensenum IN (SELECT headdocid FROM hospital WHERE headdocstartdate > '1995-12-31') AND licensenum = headdocid AND patient.OHIPnum IN (SELECT treats.OHIPnum FROM treats WHERE treats.doctorslicensenum = doctor.licensenum)
 --------------
+
+Query OK, 0 rows affected (0.01 sec)
 
 --------------
 SELECT * FROM pnames
 --------------
 
++-----------+----------+------------+-----------+
+| firstname | lastname | doctorname | hospname  |
++-----------+----------+------------+-----------+
+| Bill      | Gellar   | Shabado    | St.Joseph |
+| Colleen   | Gellar   | Shabado    | St.Joseph |
+| Scotty    | Bing     | Shabado    | St.Joseph |
++-----------+----------+------------+-----------+
+3 rows in set (0.00 sec)
+
 --------------
 SELECT * FROM doctor
 --------------
 
++-----------+------------+---------------+--------------+------------+---------+
+| firstname | lastname   | dateoflicense | specialty    | licensenum | worksat |
++-----------+------------+---------------+--------------+------------+---------+
+| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | BBC     |
+| Ross      | Clooney    | 1987-06-20    | Surgeon      | HT45       | DDE     |
+| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | BBC     |
+| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | ABC     |
+| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | BBC     |
+| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
+| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
++-----------+------------+---------------+--------------+------------+---------+
+7 rows in set (0.00 sec)
+
 --------------
 SELECT * FROM treats
 --------------
+
++-----------+-------------------+
+| OHIPnum   | doctorslicensenum |
++-----------+-------------------+
+| 110112113 | GD56              |
+| 333444555 | GD56              |
+| 667766777 | GD56              |
+| 111222111 | HT45              |
+| 111222333 | HT45              |
+| 444555666 | HT45              |
+| 667766777 | HT45              |
+| 111222333 | JK78              |
+| 444555666 | JK78              |
+| 667766777 | JK78              |
+| 939402394 | MV19              |
+| 111222333 | SE66              |
+| 939402394 | SE66              |
++-----------+-------------------+
+13 rows in set (0.00 sec)
 
 --------------
 DELETE FROM doctor WHERE lastname = "Clooney"
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 SELECT * FROM doctor
 --------------
 
++-----------+------------+---------------+--------------+------------+---------+
+| firstname | lastname   | dateoflicense | specialty    | licensenum | worksat |
++-----------+------------+---------------+--------------+------------+---------+
+| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | BBC     |
+| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | BBC     |
+| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | ABC     |
+| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | BBC     |
+| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
+| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
++-----------+------------+---------------+--------------+------------+---------+
+6 rows in set (0.00 sec)
+
 --------------
---Use to show the cascade delete effects
 SHOW CREATE TABLE treats
 --------------
+
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table  | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| treats | CREATE TABLE `treats` (
+  `OHIPnum` int(11) NOT NULL,
+  `doctorslicensenum` varchar(4) NOT NULL DEFAULT '',
+  PRIMARY KEY (`OHIPnum`,`doctorslicensenum`),
+  KEY `doctorslicensenum` (`doctorslicensenum`),
+  CONSTRAINT `treats_ibfk_1` FOREIGN KEY (`OHIPnum`) REFERENCES `patient` (`OHIPnum`) ON DELETE CASCADE,
+  CONSTRAINT `treats_ibfk_2` FOREIGN KEY (`doctorslicensenum`) REFERENCES `doctor` (`licensenum`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 |
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.01 sec)
 
 --------------
 SELECT * FROM treats
 --------------
 
++-----------+-------------------+
+| OHIPnum   | doctorslicensenum |
++-----------+-------------------+
+| 110112113 | GD56              |
+| 333444555 | GD56              |
+| 667766777 | GD56              |
+| 111222333 | JK78              |
+| 444555666 | JK78              |
+| 667766777 | JK78              |
+| 939402394 | MV19              |
+| 111222333 | SE66              |
+| 939402394 | SE66              |
++-----------+-------------------+
+9 rows in set (0.00 sec)
+
 --------------
 SELECT * FROM doctor
 --------------
 
++-----------+------------+---------------+--------------+------------+---------+
+| firstname | lastname   | dateoflicense | specialty    | licensenum | worksat |
++-----------+------------+---------------+--------------+------------+---------+
+| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | BBC     |
+| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | BBC     |
+| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | ABC     |
+| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | BBC     |
+| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
+| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
++-----------+------------+---------------+--------------+------------+---------+
+6 rows in set (0.00 sec)
+
+ERROR 1451 (23000) at line 30: Cannot delete or update a parent row: a foreign key constraint fails (`nfinn2db`.`hospital`, CONSTRAINT `hospital_ibfk_1` FOREIGN KEY (`headdocid`) REFERENCES `doctor` (`licensenum`))
 --------------
 DELETE FROM doctor WHERE specialty = "Surgeon"
 --------------

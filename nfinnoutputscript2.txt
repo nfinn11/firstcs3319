@@ -2,26 +2,15 @@
 SELECT * FROM patient
 --------------
 
-+-----------+-----------+----------+
-| OHIPnum   | firstname | lastname |
-+-----------+-----------+----------+
-| 110112113 | Bill      | Gellar   |
-| 111222111 | Suzi      | Brown    |
-| 111222333 | Jon       | Green    |
-| 333444555 | Colleen   | Gellar   |
-| 444555666 | Sean      | Gellar   |
-| 667766777 | Scotty    | Bing     |
-| 939402394 | Nick      | Finn     |
-+-----------+-----------+----------+
-7 rows in set (0.00 sec)
+Empty set (0.01 sec)
 
-ERROR 1064 (42000) at line 5: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Load the patients information
-LOAD DATA LOCAL INFILE 'loaddatafall2019.txt' IN' at line 1
 --------------
---Load the patients information
 LOAD DATA LOCAL INFILE 'loaddatafall2019.txt' INTO TABLE patient FIELDS TERMINATED BY ','
 --------------
 
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Deleted: 0  Skipped: 0  Warnings: 0
+
 --------------
 SELECT * FROM patient
 --------------
@@ -30,21 +19,19 @@ SELECT * FROM patient
 | OHIPnum   | firstname | lastname |
 +-----------+-----------+----------+
 | 110112113 | Bill      | Gellar   |
-| 111222111 | Suzi      | Brown    |
+| 111222111 | Suzi      | Bing     |
 | 111222333 | Jon       | Green    |
 | 333444555 | Colleen   | Gellar   |
 | 444555666 | Sean      | Gellar   |
 | 667766777 | Scotty    | Bing     |
-| 939402394 | Nick      | Finn     |
 +-----------+-----------+----------+
-7 rows in set (0.00 sec)
+6 rows in set (0.00 sec)
 
-ERROR 1064 (42000) at line 10: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Add Myself
-INSERT INTO patient VALUES("939402394","Nick","Finn")' at line 1
 --------------
---Add Myself
 INSERT INTO patient VALUES("939402394","Nick","Finn")
 --------------
+
+Query OK, 1 row affected (0.01 sec)
 
 --------------
 SELECT * FROM patient
@@ -54,7 +41,7 @@ SELECT * FROM patient
 | OHIPnum   | firstname | lastname |
 +-----------+-----------+----------+
 | 110112113 | Bill      | Gellar   |
-| 111222111 | Suzi      | Brown    |
+| 111222111 | Suzi      | Bing     |
 | 111222333 | Jon       | Green    |
 | 333444555 | Colleen   | Gellar   |
 | 444555666 | Sean      | Gellar   |
@@ -67,55 +54,49 @@ SELECT * FROM patient
 SELECT * FROM doctor
 --------------
 
-+-----------+------------+---------------+--------------+------------+---------+
-| firstname | lastname   | dateoflicense | specialty    | licensenum | worksat |
-+-----------+------------+---------------+--------------+------------+---------+
-| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | BBC     |
-| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | BBC     |
-| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | ABC     |
-| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | BBC     |
-| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
-| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
-+-----------+------------+---------------+--------------+------------+---------+
-6 rows in set (0.00 sec)
+Empty set (0.00 sec)
 
-ERROR 1064 (42000) at line 17: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Insert the doctors, with an empty value for Hospital they work at
-INSERT INTO ' at line 1
-ERROR 1062 (23000) at line 19: Duplicate entry 'GD56' for key 'PRIMARY'
 --------------
---Insert the doctors, with an empty value for Hospital they work at
 INSERT INTO doctor VALUES("Bernie","Kavorikian","1980-09-09","Urologist","RD34", NULL)
 --------------
+
+Query OK, 1 row affected (0.01 sec)
 
 --------------
 INSERT INTO doctor VALUES("Joey","Shabado","1960-06-24","Podiatrist","GD56",NULL)
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO doctor VALUES("Ross","Clooney","1987-06-20","Surgeon","HT45",NULL)
 --------------
 
-Query OK, 1 row affected (0.01 sec)
+Query OK, 1 row affected (0.02 sec)
 
-ERROR 1062 (23000) at line 21: Duplicate entry 'YT67' for key 'PRIMARY'
-ERROR 1062 (23000) at line 22: Duplicate entry 'JK78' for key 'PRIMARY'
-ERROR 1062 (23000) at line 23: Duplicate entry 'SE66' for key 'PRIMARY'
-ERROR 1062 (23000) at line 24: Duplicate entry 'MV19' for key 'PRIMARY'
 --------------
 INSERT INTO doctor VALUES("Ben","Spock","1955-02-20","Pediatrician","YT67",NULL)
 --------------
+
+Query OK, 1 row affected (0.00 sec)
 
 --------------
 INSERT INTO doctor VALUES("Mandy","Webster","1990-08-08","Surgeon","JK78",NULL)
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO doctor VALUES("Colleen","Aziz","1989-08-24","Surgeon","SE66",NULL)
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO doctor VALUES("Steven","Strange","1999-05-28","Surgeon","MV19",NULL)
 --------------
+
+Query OK, 1 row affected (0.11 sec)
 
 --------------
 SELECT * FROM doctor
@@ -124,13 +105,13 @@ SELECT * FROM doctor
 +-----------+------------+---------------+--------------+------------+---------+
 | firstname | lastname   | dateoflicense | specialty    | licensenum | worksat |
 +-----------+------------+---------------+--------------+------------+---------+
-| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | BBC     |
+| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | NULL    |
 | Ross      | Clooney    | 1987-06-20    | Surgeon      | HT45       | NULL    |
-| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | BBC     |
-| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | ABC     |
-| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | BBC     |
-| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
-| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
+| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | NULL    |
+| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | NULL    |
+| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | NULL    |
+| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | NULL    |
+| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | NULL    |
 +-----------+------------+---------------+--------------+------------+---------+
 7 rows in set (0.00 sec)
 
@@ -138,31 +119,25 @@ SELECT * FROM doctor
 SELECT * FROM hospital
 --------------
 
-+-----------+----------+----------+-------------+--------------+-----------+------------------+
-| hospname  | city     | province | numberofbed | hospitalcode | headdocid | headdocstartdate |
-+-----------+----------+----------+-------------+--------------+-----------+------------------+
-| Victoria  | London   | On       |        1600 | ABC          | SE66      | 1994-12-05       |
-| St.Joseph | London   | On       |        1000 | BBC          | GD56      | 1999-09-10       |
-| Victoria  | Victoria | BC       |        1200 | DDE          | YT67      | 1997-12-07       |
-+-----------+----------+----------+-------------+--------------+-----------+------------------+
-3 rows in set (0.00 sec)
+Empty set (0.00 sec)
 
-ERROR 1064 (42000) at line 30: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Insert the Hospitals
-INSERT INTO hospital VALUES("St.Joseph","London","On",100' at line 1
-ERROR 1062 (23000) at line 32: Duplicate entry 'ABC' for key 'PRIMARY'
-ERROR 1062 (23000) at line 33: Duplicate entry 'DDE' for key 'PRIMARY'
 --------------
---Insert the Hospitals
 INSERT INTO hospital VALUES("St.Joseph","London","On",1000,"BBC","GD56","1999-09-10")
 --------------
+
+Query OK, 1 row affected (0.03 sec)
 
 --------------
 INSERT INTO hospital VALUES("Victoria","London","On",1600,"ABC","SE66","1994-12-05")
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO hospital VALUES("Victoria","Victoria","BC",1200,"DDE","YT67","1997-12-07")
 --------------
+
+Query OK, 1 row affected (0.00 sec)
 
 --------------
 SELECT * FROM hospital
@@ -181,27 +156,13 @@ SELECT * FROM hospital
 SELECT * FROM treats
 --------------
 
-+-----------+-------------------+
-| OHIPnum   | doctorslicensenum |
-+-----------+-------------------+
-| 110112113 | GD56              |
-| 333444555 | GD56              |
-| 667766777 | GD56              |
-| 111222333 | JK78              |
-| 444555666 | JK78              |
-| 667766777 | JK78              |
-| 939402394 | MV19              |
-| 111222333 | SE66              |
-| 939402394 | SE66              |
-+-----------+-------------------+
-9 rows in set (0.00 sec)
+Empty set (0.00 sec)
 
-ERROR 1064 (42000) at line 39: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Insert the patient and doctor relations
-INSERT INTO treats VALUES("110112113",' at line 1
 --------------
---Insert the patient and doctor relations
 INSERT INTO treats VALUES("110112113","GD56")
 --------------
+
+Query OK, 1 row affected (0.01 sec)
 
 --------------
 INSERT INTO treats VALUES("444555666","HT45")
@@ -209,63 +170,71 @@ INSERT INTO treats VALUES("444555666","HT45")
 
 Query OK, 1 row affected (0.01 sec)
 
-ERROR 1062 (23000) at line 42: Duplicate entry '444555666-JK78' for key 'PRIMARY'
-ERROR 1062 (23000) at line 43: Duplicate entry '111222333-SE66' for key 'PRIMARY'
 --------------
 INSERT INTO treats VALUES("444555666","JK78")
 --------------
+
+Query OK, 1 row affected (0.02 sec)
 
 --------------
 INSERT INTO treats VALUES("111222333","SE66")
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO treats VALUES("111222333","YT67")
 --------------
 
-Query OK, 1 row affected (0.01 sec)
+Query OK, 1 row affected (0.00 sec)
 
-ERROR 1062 (23000) at line 45: Duplicate entry '111222333-JK78' for key 'PRIMARY'
-ERROR 1062 (23000) at line 46: Duplicate entry '333444555-GD56' for key 'PRIMARY'
 --------------
 INSERT INTO treats VALUES("111222333","JK78")
 --------------
+
+Query OK, 1 row affected (0.01 sec)
 
 --------------
 INSERT INTO treats VALUES("333444555","GD56")
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO treats VALUES("667766777","YT67")
 --------------
 
-Query OK, 1 row affected (0.01 sec)
+Query OK, 1 row affected (0.00 sec)
 
-ERROR 1062 (23000) at line 48: Duplicate entry '667766777-JK78' for key 'PRIMARY'
-ERROR 1062 (23000) at line 49: Duplicate entry '667766777-GD56' for key 'PRIMARY'
 --------------
 INSERT INTO treats VALUES("667766777","JK78")
 --------------
+
+Query OK, 1 row affected (0.01 sec)
 
 --------------
 INSERT INTO treats VALUES("667766777","GD56")
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO treats VALUES("111222111","YT67")
 --------------
 
-Query OK, 1 row affected (0.01 sec)
+Query OK, 1 row affected (0.00 sec)
 
-ERROR 1062 (23000) at line 51: Duplicate entry '939402394-MV19' for key 'PRIMARY'
-ERROR 1062 (23000) at line 52: Duplicate entry '939402394-SE66' for key 'PRIMARY'
 --------------
 INSERT INTO treats VALUES("939402394","MV19")
 --------------
 
+Query OK, 1 row affected (0.01 sec)
+
 --------------
 INSERT INTO treats VALUES("939402394","SE66")
 --------------
+
+Query OK, 1 row affected (0.01 sec)
 
 --------------
 SELECT * FROM treats
@@ -297,29 +266,29 @@ SELECT * FROM doctor
 +-----------+------------+---------------+--------------+------------+---------+
 | firstname | lastname   | dateoflicense | specialty    | licensenum | worksat |
 +-----------+------------+---------------+--------------+------------+---------+
-| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | BBC     |
+| Joey      | Shabado    | 1960-06-24    | Podiatrist   | GD56       | NULL    |
 | Ross      | Clooney    | 1987-06-20    | Surgeon      | HT45       | NULL    |
-| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | BBC     |
-| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | ABC     |
-| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | BBC     |
-| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
-| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
+| Mandy     | Webster    | 1990-08-08    | Surgeon      | JK78       | NULL    |
+| Steven    | Strange    | 1999-05-28    | Surgeon      | MV19       | NULL    |
+| Bernie    | Kavorikian | 1980-09-09    | Urologist    | RD34       | NULL    |
+| Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | NULL    |
+| Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | NULL    |
 +-----------+------------+---------------+--------------+------------+---------+
 7 rows in set (0.00 sec)
 
-ERROR 1064 (42000) at line 58: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Add the doctors place of work
-UPDATE doctor SET worksat = 'BBC' WHERE licensen' at line 1
 --------------
---Add the doctors place of work
 UPDATE doctor SET worksat = 'BBC' WHERE licensenum = 'RD34'
 --------------
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 --------------
 UPDATE doctor SET worksat = 'BBC' WHERE licensenum = 'GD56'
 --------------
 
-Query OK, 0 rows affected (0.00 sec)
-Rows matched: 1  Changed: 0  Warnings: 0
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 --------------
 UPDATE doctor SET worksat = 'DDE' WHERE licensenum = 'HT45'
@@ -332,29 +301,29 @@ Rows matched: 1  Changed: 1  Warnings: 0
 UPDATE doctor SET worksat = 'DDE' WHERE licensenum = 'YT67'
 --------------
 
-Query OK, 0 rows affected (0.02 sec)
-Rows matched: 1  Changed: 0  Warnings: 0
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 --------------
 UPDATE doctor SET worksat = 'BBC' WHERE licensenum = 'JK78'
 --------------
 
-Query OK, 0 rows affected (0.00 sec)
-Rows matched: 1  Changed: 0  Warnings: 0
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 --------------
 UPDATE doctor SET worksat = 'ABC' WHERE licensenum = 'SE66'
 --------------
 
-Query OK, 0 rows affected (0.02 sec)
-Rows matched: 1  Changed: 0  Warnings: 0
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 --------------
 UPDATE doctor SET worksat = 'ABC' WHERE licensenum = 'MV19'
 --------------
 
-Query OK, 0 rows affected (0.00 sec)
-Rows matched: 1  Changed: 0  Warnings: 0
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 --------------
 SELECT * FROM doctor
@@ -371,7 +340,7 @@ SELECT * FROM doctor
 | Colleen   | Aziz       | 1989-08-24    | Surgeon      | SE66       | ABC     |
 | Ben       | Spock      | 1955-02-20    | Pediatrician | YT67       | DDE     |
 +-----------+------------+---------------+--------------+------------+---------+
-7 rows in set (0.00 sec)
+7 rows in set (0.01 sec)
 
 --------------
 SELECT * FROM patient
@@ -381,7 +350,7 @@ SELECT * FROM patient
 | OHIPnum   | firstname | lastname |
 +-----------+-----------+----------+
 | 110112113 | Bill      | Gellar   |
-| 111222111 | Suzi      | Brown    |
+| 111222111 | Suzi      | Bing     |
 | 111222333 | Jon       | Green    |
 | 333444555 | Colleen   | Gellar   |
 | 444555666 | Sean      | Gellar   |
@@ -390,12 +359,12 @@ SELECT * FROM patient
 +-----------+-----------+----------+
 7 rows in set (0.00 sec)
 
-ERROR 1064 (42000) at line 71: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-Change given patients last name to Brown
-UPDATE patient SET lastname = "Brown" ' at line 1
 --------------
--Change given patients last name to Brown
 UPDATE patient SET lastname = "Brown" WHERE OHIPnum = "111222111"
 --------------
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 --------------
 SELECT * FROM patient
@@ -437,12 +406,12 @@ SELECT * FROM treats
 +-----------+-------------------+
 13 rows in set (0.00 sec)
 
-ERROR 1064 (42000) at line 78: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--Change all patients from doctor Spock to Clooney
-UPDATE treats SET doctorslice' at line 1
 --------------
---Change all patients from doctor Spock to Clooney
 UPDATE treats SET doctorslicensenum = (SELECT licensenum FROM doctor WHERE lastname = "Clooney") WHERE doctorslicensenum = (SELECT licensenum FROM doctor WHERE lastname = "Spock")
 --------------
+
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
 
 --------------
 SELECT * FROM treats
@@ -454,16 +423,16 @@ SELECT * FROM treats
 | 110112113 | GD56              |
 | 333444555 | GD56              |
 | 667766777 | GD56              |
+| 111222111 | HT45              |
+| 111222333 | HT45              |
 | 444555666 | HT45              |
+| 667766777 | HT45              |
 | 111222333 | JK78              |
 | 444555666 | JK78              |
 | 667766777 | JK78              |
 | 939402394 | MV19              |
 | 111222333 | SE66              |
 | 939402394 | SE66              |
-| 111222111 | YT67              |
-| 111222333 | YT67              |
-| 667766777 | YT67              |
 +-----------+-------------------+
 13 rows in set (0.00 sec)
 

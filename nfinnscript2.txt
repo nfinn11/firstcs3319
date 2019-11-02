@@ -2,19 +2,19 @@ USE nfinn2db;
 
 SELECT * FROM patient;
 
---Load the patients information
+-- Load the patients information
 LOAD DATA LOCAL INFILE 'loaddatafall2019.txt' INTO TABLE patient FIELDS TERMINATED BY ',';
 
 SELECT * FROM patient;
 
---Add Myself
+-- Add Myself
 INSERT INTO patient VALUES("939402394","Nick","Finn");
 
 SELECT * FROM patient;
 
 SELECT * FROM doctor;
 
---Insert the doctors, with an empty value for Hospital they work at
+-- Insert the doctors, with an empty value for Hospital they work at
 INSERT INTO doctor VALUES("Bernie","Kavorikian","1980-09-09","Urologist","RD34", NULL);
 INSERT INTO doctor VALUES("Joey","Shabado","1960-06-24","Podiatrist","GD56",NULL);
 INSERT INTO doctor VALUES("Ross","Clooney","1987-06-20","Surgeon","HT45",NULL);
@@ -27,7 +27,7 @@ SELECT * FROM doctor;
 
 SELECT * FROM hospital;
 
---Insert the Hospitals
+-- Insert the Hospitals
 INSERT INTO hospital VALUES("St.Joseph","London","On",1000,"BBC","GD56","1999-09-10");
 INSERT INTO hospital VALUES("Victoria","London","On",1600,"ABC","SE66","1994-12-05");
 INSERT INTO hospital VALUES("Victoria","Victoria","BC",1200,"DDE","YT67","1997-12-07");
@@ -36,7 +36,7 @@ SELECT * FROM hospital;
 
 SELECT * FROM treats;
 
---Insert the patient and doctor relations
+-- Insert the patient and doctor relations
 INSERT INTO treats VALUES("110112113","GD56");
 INSERT INTO treats VALUES("444555666","HT45");
 INSERT INTO treats VALUES("444555666","JK78");
@@ -55,7 +55,7 @@ SELECT * FROM treats;
 
 SELECT * FROM doctor;
 
---Add the doctors place of work
+-- Add the doctors place of work
 UPDATE doctor SET worksat = 'BBC' WHERE licensenum = 'RD34';
 UPDATE doctor SET worksat = 'BBC' WHERE licensenum = 'GD56';
 UPDATE doctor SET worksat = 'DDE' WHERE licensenum = 'HT45';
@@ -68,14 +68,14 @@ SELECT * FROM doctor;
 
 SELECT * FROM patient;
 
--Change given patients last name to Brown
+-- Change given patients last name to Brown
 UPDATE patient SET lastname = "Brown" WHERE OHIPnum = "111222111";
 
 SELECT * FROM patient;
 
 SELECT * FROM treats;
 
---Change all patients from doctor Spock to Clooney
+-- Change all patients from doctor Spock to Clooney
 UPDATE treats SET doctorslicensenum = (SELECT licensenum FROM doctor WHERE lastname = "Clooney") WHERE doctorslicensenum = (SELECT licensenum FROM doctor WHERE lastname = "Spock");
 
 SELECT * FROM treats;

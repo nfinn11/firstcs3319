@@ -1,4 +1,4 @@
-USE nfinn2b;
+USE nfinn2db;
 
 DELETE FROM doctor WHERE dateoflicense < "1965-01-01";
 -- This delete will not run successfully because one of the doctors trying to be deleted is a head doctor of a hospital
@@ -8,7 +8,7 @@ SELECT * FROM doctor;
 
 SELECT * FROM patient;
 
---View to see patients first names and last names who are treated by head doctors of hospitals.
+-- View to see patients first names and last names who are treated by head doctors of hospitals.
 CREATE VIEW pnames AS SELECT patient.firstname, patient.lastname, doctor.lastname AS "doctorname", hospname FROM patient, doctor JOIN hospital WHERE licensenum IN (SELECT headdocid FROM hospital WHERE headdocstartdate > '1995-12-31') AND licensenum = headdocid AND patient.OHIPnum IN (SELECT treats.OHIPnum FROM treats WHERE treats.doctorslicensenum = doctor.licensenum);
 
 SELECT * FROM pnames;
@@ -21,7 +21,7 @@ DELETE FROM doctor WHERE lastname = "Clooney";
 
 SELECT * FROM doctor;
 
---Use to show the cascade delete effects
+-- Use to show the cascade delete effects
 SHOW CREATE TABLE treats;
 SELECT * FROM treats;
 

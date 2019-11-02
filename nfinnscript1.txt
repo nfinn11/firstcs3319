@@ -1,13 +1,13 @@
 SHOW DATABASES;
 
---Drop the database if it already exists
+-- Drop the database if it already exists
 DROP DATABASE IF EXISTS nfinn2db;
 
---Create and use the new one
+-- Create and use the new one
 CREATE DATABASE nfinn2db;
 USE nfinn2db;
 
---TA permissions
+-- TA permissions
 GRANT USAGE ON *.* TO 'ta'@'localhost';
 DROP USER 'ta'@'localhost';
 CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319';
@@ -16,12 +16,12 @@ FLUSH PRIVILEGES;
 
 SHOW tables;
 
---Create all the tables
+-- Create all the tables
 CREATE TABLE doctor (firstname VARCHAR(20), lastname VARCHAR(20), dateoflicense DATE, specialty VARCHAR(30), licensenum VARCHAR(4) NOT NULL, worksat VARCHAR(3), PRIMARY KEY(licensenum));
 
 CREATE TABLE hospital (hospname VARCHAR(20), city VARCHAR(20), province VARCHAR(2), numberofbed INT, hospitalcode VARCHAR(3) NOT NULL, headdocid VARCHAR(4), headdocstartdate DATE, PRIMARY KEY(hospitalcode), FOREIGN KEY(headdocid) REFERENCES doctor(licensenum));
 
---Add the foreign key for doctors hospital of work afterwards
+-- Add the foreign key for doctors hospital of work afterwards
 ALTER TABLE doctor ADD FOREIGN KEY (worksat) REFERENCES hospital(hospitalcode);
 
 CREATE TABLE patient (OHIPnum INT NOT NULL,firstname VARCHAR(20), lastname VARCHAR(20), PRIMARY KEY(OHIPnum));
